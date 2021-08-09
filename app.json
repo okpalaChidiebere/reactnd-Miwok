@@ -1,0 +1,11 @@
+{
+  "expo": {
+    "name": "reactnd-Miwok",
+    "slug": "reactnd-Miwok",
+    "version": "1.0.0",
+    "assetBundlePatterns": [
+      "**/*"
+    ]
+  },
+  "name": "reactnd-Miwok"
+}

@@ -25,6 +25,7 @@ export function FamilyScreenOptions(){
   return {
       title: Strings.category_family,
       headerTintColor: Colors.white,
+      headerBackTitleVisible: false,
       headerMode: "screen",
       headerStyle: { 
         backgroundColor: Colors.primary_color,

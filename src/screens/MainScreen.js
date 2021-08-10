@@ -1,36 +1,44 @@
 import React from "react"
-import { Text, View, StyleSheet }  from "react-native"
+import { Text, View, StyleSheet, Pressable }  from "react-native"
 import { useTheme } from "@react-navigation/native"
 import { SafeAreaView } from "react-native-safe-area-context"
 import { Colors, Strings } from "../values"
 
-export function MainScreen({ }){
+export function MainScreen({ navigation, }){
 
   const { categoryStyle, container } = useTheme()
 
   return (
     <SafeAreaView style={container} edges={["bottom", "left", "right"]}>
       <View style={styles.content}>
-        <Text
-          style={[categoryStyle, { backgroundColor: Colors.category_numbers }]}
-        >
-          {Strings.category_numbers}
-        </Text>
-        <Text
-          style={[categoryStyle, { backgroundColor: Colors.category_family }]}
-        >
-          {Strings.category_family}
-        </Text>
-        <Text
-          style={[categoryStyle, { backgroundColor: Colors.category_colors }]}
-        >
-          {Strings.category_colors}
-        </Text>
-        <Text
-          style={[categoryStyle, { backgroundColor: Colors.category_phrases }]}
-        >
-          {Strings.category_phrases}
-        </Text>
+        <Pressable onPress={() => navigation.navigate(Strings.category_numbers)}>
+          <Text
+            style={[categoryStyle, { backgroundColor: Colors.category_numbers }]}
+          >
+            {Strings.category_numbers}
+          </Text>
+        </Pressable>
+        <Pressable onPress={() => navigation.navigate(Strings.category_family)}>
+          <Text
+            style={[categoryStyle, { backgroundColor: Colors.category_family }]}
+          >
+            {Strings.category_family}
+          </Text>
+        </Pressable>
+        <Pressable onPress={() => navigation.navigate(Strings.category_colors)}>
+          <Text
+            style={[categoryStyle, { backgroundColor: Colors.category_colors }]}
+          >
+            {Strings.category_colors}
+          </Text>
+        </Pressable>
+        <Pressable onPress={() => navigation.navigate(Strings.category_colors)}>
+          <Text
+            style={[categoryStyle, { backgroundColor: Colors.category_phrases }]}
+          >
+            {Strings.category_phrases}
+          </Text>
+        </Pressable>
       </View>
     </SafeAreaView>
   )

@@ -25,6 +25,7 @@ export function PhrasesScreenOptions(){
   return {
       title: Strings.category_colors,
       headerTintColor: Colors.white,
+      headerBackTitleVisible: false,
       headerMode: "screen",
       headerStyle: { 
         backgroundColor: Colors.primary_color,

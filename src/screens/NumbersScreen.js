@@ -23,8 +23,10 @@ const styles = StyleSheet.create({
 
 export function NumbersScreenOptions(){
   return {
+    //learn more about the props you can configure here https://reactnavigation.org/docs/native-stack-navigator/#options
       title: Strings.category_numbers,
       headerTintColor: Colors.white,
+      headerBackTitleVisible: false,
       headerMode: "screen",
       headerStyle: { 
         backgroundColor: Colors.primary_color,

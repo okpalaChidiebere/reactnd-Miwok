@@ -38,3 +38,9 @@ export default class Word {
 }
 //Learn more on JS classes here https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Classes
 //explore concepts words like: Static Methods, SubClasses, etc
+
+/**
+ * Working with APIs, ideally you already know the type of objects that your app is using in the backEnd
+ * But having to define the class here as well helps to understand what type of data is flowing in the
+ * the app front-end as well :)
+ */

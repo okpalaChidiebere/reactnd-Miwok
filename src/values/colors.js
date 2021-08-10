@@ -21,4 +21,6 @@ export const Colors = {
     category_phrases: "#16AFCA",
 
     white: "#FFFFFF",
+
+    colorDivider: "#BDBDBD",
 }

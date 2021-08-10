@@ -32,7 +32,7 @@ export function MainScreen({ navigation, }){
             {Strings.category_colors}
           </Text>
         </Pressable>
-        <Pressable onPress={() => navigation.navigate(Strings.category_colors)}>
+        <Pressable onPress={() => navigation.navigate(Strings.category_phrases)}>
           <Text
             style={[categoryStyle, { backgroundColor: Colors.category_phrases }]}
           >

@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react"
-import { View, StyleSheet, FlatList, Pressable, TouchableHighlight }  from "react-native"
+import { View, StyleSheet, FlatList, Pressable }  from "react-native"
 import { useTheme } from "@react-navigation/native"
 import { Audio } from "expo-av"
 import { SafeAreaView } from "react-native-safe-area-context"

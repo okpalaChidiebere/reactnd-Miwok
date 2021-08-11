@@ -12,6 +12,9 @@ export default class Word {
     /** Image resource ID for the word */
     #mImageResourceId
 
+    /** Audio resource ID for the word */
+    #mAudioResourceId
+
     /**
      * Create a new Word object.
      *
@@ -19,11 +22,13 @@ export default class Word {
      *                           (such as English)
      * @param miwokTranslation is the word in the Miwok language
      * @param imageResourceId is the drawable resource ID for the image associated with the word
+     * @param audioResourceId is the resource ID for the audio file associated with this word
      */
-    constructor(defaultTranslation, miwokTranslation, imageResourceId) {
+    constructor(defaultTranslation, miwokTranslation, imageResourceId, audioResourceId) {
         this.#mDefaultTranslation = defaultTranslation
         this.#mMiwokTranslation = miwokTranslation
         this.#mImageResourceId = imageResourceId
+        this.#mAudioResourceId = audioResourceId
     }
 
     /**
@@ -45,6 +50,13 @@ export default class Word {
      */
     get getImageResourceId() {
         return this.#mImageResourceId
+    }
+
+    /**
+     * Return the audio resource ID of the word.
+     */
+    get getAudioResourceId() {
+        return this.#mAudioResourceId
     }
 
 }

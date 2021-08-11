@@ -13,16 +13,16 @@ export function NumbersScreen(){
   const [sound, setSound] = useState()
 
   const words = []
-  words.push(new Word("one", "lutti", require("../assets/images/drawable-mdpi/number_one.png")))
-  words.push(new Word("two", "otiiko", require("../assets/images/drawable-mdpi/number_two.png")))
-  words.push(new Word("three", "tolookosu", require("../assets/images/drawable-mdpi/number_three.png")))
-  words.push(new Word("four", "oyyisa", require("../assets/images/drawable-mdpi/number_four.png")))
-  words.push(new Word("five", "massokka", require("../assets/images/drawable-mdpi/number_five.png")))
-  words.push(new Word("six", "temmokka", require("../assets/images/drawable-mdpi/number_six.png")))
-  words.push(new Word("seven", "kenekaku", require("../assets/images/drawable-mdpi/number_seven.png")))
-  words.push(new Word("eight", "kawinta", require("../assets/images/drawable-mdpi/number_eight.png")))
-  words.push(new Word("nine", "wo’e", require("../assets/images/drawable-mdpi/number_nine.png")))
-  words.push(new Word("ten", "na’aacha", require("../assets/images/drawable-mdpi/number_ten.png")))
+  words.push(new Word("one", "lutti", require("../assets/images/drawable-mdpi/number_one.png"), require("../assets/audio/number_one.mp3")))
+  words.push(new Word("two", "otiiko", require("../assets/images/drawable-mdpi/number_two.png"), require("../assets/audio/number_two.mp3")))
+  words.push(new Word("three", "tolookosu", require("../assets/images/drawable-mdpi/number_three.png"), require("../assets/audio/number_three.mp3")))
+  words.push(new Word("four", "oyyisa", require("../assets/images/drawable-mdpi/number_four.png"), require("../assets/audio/number_four.mp3")))
+  words.push(new Word("five", "massokka", require("../assets/images/drawable-mdpi/number_five.png"), require("../assets/audio/number_five.mp3")))
+  words.push(new Word("six", "temmokka", require("../assets/images/drawable-mdpi/number_six.png"), require("../assets/audio/number_six.mp3")))
+  words.push(new Word("seven", "kenekaku", require("../assets/images/drawable-mdpi/number_seven.png"), require("../assets/audio/number_seven.mp3")))
+  words.push(new Word("eight", "kawinta", require("../assets/images/drawable-mdpi/number_eight.png"), require("../assets/audio/number_eight.mp3")))
+  words.push(new Word("nine", "wo’e", require("../assets/images/drawable-mdpi/number_nine.png"), require("../assets/audio/number_nine.mp3")))
+  words.push(new Word("ten", "na’aacha", require("../assets/images/drawable-mdpi/number_ten.png"), require("../assets/audio/number_ten.mp3")))
 
   useEffect(() => {
     return sound
@@ -31,10 +31,17 @@ export function NumbersScreen(){
       : undefined;
   }, [sound])
 
-  const handleOnItemClick = async () => {
-    const { sound } = await Audio.Sound.createAsync(
-        require("../assets/audio/number_one.mp3")
-    )
+  // Set a click listener to play the audio when the list item is clicked on
+  const handleOnItemClick = async (position) => {
+      
+    // Get the {@link Word} object at the given position the user clicked on
+    const word = words[position]
+
+    // Create and setup the {@link expo-av} for the audio resource associated
+    // with the current word
+    const { sound } = await Audio.Sound.createAsync(word.getAudioResourceId)
+
+    // Start the audio file
     await sound.playAsync()
   }
   return (
@@ -42,9 +49,9 @@ export function NumbersScreen(){
       <View style={styles.content}>
         <FlatList 
           data={words}
-          renderItem={({ item }) => {
+          renderItem={({ item, index }) => {
             return (
-              <Pressable onPress={handleOnItemClick}>
+              <Pressable onPress={() => handleOnItemClick(index)}>
                 <ListItem item={item} style={{ backgroundColor: Colors.category_numbers }} onPress={handleOnItemClick}/>
               </Pressable>
             )

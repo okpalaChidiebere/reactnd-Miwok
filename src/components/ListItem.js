@@ -3,11 +3,11 @@ import { View, Text, Image, StyleSheet }  from "react-native"
 import { Colors, Dimens } from "../values"
 
 /** {@link ListItem} will display list items for each {@link Word} in the list. */
-export function ListItem({ item }){
+export function ListItem({ item, style }){
     return (
         <View style={styles.container} >
             {item.getImageResourceId && <Image source={item.getImageResourceId} width={Dimens.list_item_height} height={Dimens.list_item_height}/>}
-            <View style={styles.textWrapper}>
+            <View style={[styles.textWrapper, style]}>
                 <Text style={[styles.text, { fontWeight:"bold" }]}>{item.getDefaultTranslation}</Text>
                 <Text style={styles.text}>{item.getMiwokTranslation}</Text>
             </View>
@@ -25,7 +25,6 @@ const styles = StyleSheet.create({
     },
     textWrapper: { 
         paddingLeft: 16, 
-        backgroundColor: Colors.category_numbers, 
         width:"100%", 
         height: "100%", 
         justifyContent:"center",

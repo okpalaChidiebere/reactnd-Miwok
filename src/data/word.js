@@ -9,6 +9,9 @@ export default class Word {
     /** Miwok translation for the word */
     #mMiwokTranslation
 
+    /** Image resource ID for the word */
+    #mImageResourceId
+
     /**
      * Create a new Word object.
      *
@@ -33,6 +36,13 @@ export default class Word {
      */
     get getMiwokTranslation() {
         return this.#mMiwokTranslation;
+    }
+
+    /**
+     * Return the image resource ID of the word.
+     */
+    get getImageResourceId() {
+        return this.#mImageResourceId
     }
 
 }

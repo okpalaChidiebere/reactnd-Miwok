@@ -12,14 +12,14 @@ export function ColorsScreen(){
 
   // Create a list of words
   const words = []
-  words.push(new Word("red", "weṭeṭṭi"))
-  words.push(new Word("mustard yellow", "chiwiiṭә"))
-  words.push(new Word("dusty yellow", "ṭopiisә"))
-  words.push(new Word("green", "chokokki"))
-  words.push(new Word("brown", "ṭakaakki"))
-  words.push(new Word("gray", "ṭopoppi"))
-  words.push(new Word("black", "kululli"))
-  words.push(new Word("white", "kelelli"))
+  words.push(new Word("red", "weṭeṭṭi", require("../assets/images/drawable-mdpi/color_red.png")))
+  words.push(new Word("mustard yellow", "chiwiiṭә", require("../assets/images/drawable-mdpi/color_mustard_yellow.png")))
+  words.push(new Word("dusty yellow", "ṭopiisә", require("../assets/images/drawable-mdpi/color_dusty_yellow.png")))
+  words.push(new Word("green", "chokokki", require("../assets/images/drawable-mdpi/color_green.png")))
+  words.push(new Word("brown", "ṭakaakki", require("../assets/images/drawable-mdpi/color_brown.png")))
+  words.push(new Word("gray", "ṭopoppi", require("../assets/images/drawable-mdpi/color_gray.png")))
+  words.push(new Word("black", "kululli", require("../assets/images/drawable-mdpi/color_black.png")))
+  words.push(new Word("white", "kelelli", require("../assets/images/drawable-mdpi/color_white.png")))
 
   return (
     <SafeAreaView style={container} edges={["bottom", "left", "right"]}>

@@ -12,16 +12,17 @@ export function FamilyScreen(){
 
   // Create a list of words
   const words = []
-  words.push(new Word("father", "әpә"))
-  words.push(new Word("mother", "әṭa"))
-  words.push(new Word("son", "angsi"))
-  words.push(new Word("daughter", "tune"))
-  words.push(new Word("older brother", "taachi"))
-  words.push(new Word("younger brother", "chalitti"))
-  words.push(new Word("older sister", "teṭe"))
-  words.push(new Word("younger sister", "kolliti"))
-  words.push(new Word("grandmother ", "ama"))
-  words.push(new Word("grandfather", "paapa"))
+  words.push(new Word("father", "әpә", require("../assets/images/drawable-mdpi/family_father.png")))
+  words.push(new Word("mother", "әṭa", require("../assets/images/drawable-mdpi/family_mother.png")))
+  words.push(new Word("son", "angsi", require("../assets/images/drawable-mdpi/family_son.png")))
+  words.push(new Word("daughter", "tune", require("../assets/images/drawable-mdpi/family_daughter.png")))
+  words.push(new Word("older brother", "taachi", require("../assets/images/drawable-mdpi/family_older_brother.png")))
+  words.push(new Word("younger brother", "chalitti", require("../assets/images/drawable-mdpi/family_younger_brother.png")))
+  words.push(new Word("older sister", "teṭe", require("../assets/images/drawable-mdpi/family_older_sister.png")))
+  words.push(new Word("younger sister", "kolliti", require("../assets/images/drawable-mdpi/family_younger_sister.png")))
+  words.push(new Word("grandmother ", "ama", require("../assets/images/drawable-mdpi/family_grandmother.png")))
+  words.push(new Word("grandfather", "paapa", require("../assets/images/drawable-mdpi/family_grandfather.png")))
+
   
 
   return (

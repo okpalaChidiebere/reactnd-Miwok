@@ -18,10 +18,12 @@ export default class Word {
      * @param defaultTranslation is the word in a language that the user is already familiar with
      *                           (such as English)
      * @param miwokTranslation is the word in the Miwok language
+     * @param imageResourceId is the drawable resource ID for the image associated with the word
      */
-    constructor(defaultTranslation, miwokTranslation) {
+    constructor(defaultTranslation, miwokTranslation, imageResourceId) {
         this.#mDefaultTranslation = defaultTranslation
         this.#mMiwokTranslation = miwokTranslation
+        this.#mImageResourceId = imageResourceId
     }
 
     /**

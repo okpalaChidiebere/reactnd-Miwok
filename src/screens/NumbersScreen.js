@@ -10,16 +10,16 @@ export function NumbersScreen(){
 
   const { container } = useTheme()
   const words = []
-  words.push(new Word("one", "lutti"))
-  words.push(new Word("two", "otiiko"))
-  words.push(new Word("three", "tolookosu"))
-  words.push(new Word("four", "oyyisa"))
-  words.push(new Word("five", "massokka"))
-  words.push(new Word("six", "temmokka"))
-  words.push(new Word("seven", "kenekaku"))
-  words.push(new Word("eight", "kawinta"))
-  words.push(new Word("nine", "wo’e"))
-  words.push(new Word("ten", "na’aacha"))
+  words.push(new Word("one", "lutti", require("../assets/images/drawable-mdpi/number_one.png")))
+  words.push(new Word("two", "otiiko", require("../assets/images/drawable-mdpi/number_two.png")))
+  words.push(new Word("three", "tolookosu", require("../assets/images/drawable-mdpi/number_three.png")))
+  words.push(new Word("four", "oyyisa", require("../assets/images/drawable-mdpi/number_four.png")))
+  words.push(new Word("five", "massokka", require("../assets/images/drawable-mdpi/number_five.png")))
+  words.push(new Word("six", "temmokka", require("../assets/images/drawable-mdpi/number_six.png")))
+  words.push(new Word("seven", "kenekaku", require("../assets/images/drawable-mdpi/number_seven.png")))
+  words.push(new Word("eight", "kawinta", require("../assets/images/drawable-mdpi/number_eight.png")))
+  words.push(new Word("nine", "wo’e", require("../assets/images/drawable-mdpi/number_nine.png")))
+  words.push(new Word("ten", "na’aacha", require("../assets/images/drawable-mdpi/number_ten.png")))
 
   return (
     <SafeAreaView style={container} edges={["bottom", "left", "right"]}>

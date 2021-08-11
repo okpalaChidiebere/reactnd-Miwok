@@ -1,15 +1,37 @@
 import React from "react"
-import { View, Text, Image }  from "react-native"
+import { View, Text, Image, StyleSheet }  from "react-native"
+import { Colors, Dimens } from "../values"
 
 /** {@link ListItem} will display list items for each {@link Word} in the list. */
 export function ListItem({ item }){
     return (
-        <View style={{ padding: 16, flex: 1, flexDirection: "row", alignItems:"center" }}>
-            {item.getImageResourceId && <Image source={item.getImageResourceId}/>}
-            <View style={{ paddingLeft: 16 }}>
-                <Text>{item.getDefaultTranslation}</Text>
-                <Text>{item.getMiwokTranslation}</Text>
+        <View style={styles.container} >
+            {item.getImageResourceId && <Image source={item.getImageResourceId} width={Dimens.list_item_height} height={Dimens.list_item_height}/>}
+            <View style={styles.textWrapper}>
+                <Text style={[styles.text, { fontWeight:"bold" }]}>{item.getDefaultTranslation}</Text>
+                <Text style={styles.text}>{item.getMiwokTranslation}</Text>
             </View>
         </View>
     )
 }
+
+const styles = StyleSheet.create({
+    container: { 
+        flex: 1, 
+        flexDirection: "row", 
+        alignItems:"center", 
+        minHeight: Dimens.list_item_height, //the height should be atleast 88. It gorw bigger than that depending on the text inside
+        backgroundColor: Colors.tan_background,
+    },
+    textWrapper: { 
+        paddingLeft: 16, 
+        backgroundColor: Colors.category_numbers, 
+        width:"100%", 
+        height: "100%", 
+        justifyContent:"center",
+    },
+    text: { 
+        color: "#fff", 
+        fontSize: 18/**textAppearanceMedium */ 
+    }
+})

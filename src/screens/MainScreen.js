@@ -9,7 +9,7 @@ export function MainScreen({ navigation, }){
   const { categoryStyle, container } = useTheme()
 
   return (
-    <SafeAreaView style={container} edges={["bottom", "left", "right"]}>
+    <SafeAreaView style={[container, { backgroundColor: Colors.tan_background }]} edges={["bottom", "left", "right"]}>
       <View style={styles.content}>
         <Pressable onPress={() => navigation.navigate(Strings.category_numbers)}>
           <Text

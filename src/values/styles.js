@@ -13,7 +13,7 @@ export const Styles = {
     },
     container: {
       flex: 1,
-      backgroundColor: Colors.tan_background,
+      //backgroundColor: Colors.tan_background,
     },
     categoryStyle: {
         width:"100%",

@@ -1,5 +1,6 @@
 import React from "react"
 import { View, Text, Image, StyleSheet }  from "react-native"
+import { AntDesign as Icon } from "@expo/vector-icons"
 import { Colors, Dimens } from "../values"
 
 /** {@link ListItem} will display list items for each {@link Word} in the list. */
@@ -11,6 +12,7 @@ export function ListItem({ item, style }){
                 <Text style={[styles.text, { fontWeight:"bold" }]}>{item.getDefaultTranslation}</Text>
                 <Text style={styles.text}>{item.getMiwokTranslation}</Text>
             </View>
+            <Icon name="caretright" size={24} color="white" style={{ top: 30, bottom: 0, right:10,  position:"absolute" }}/>
         </View>
     )
 }
@@ -25,7 +27,7 @@ const styles = StyleSheet.create({
     },
     textWrapper: { 
         paddingLeft: 16, 
-        width:"100%", 
+        width:"100%", //in real app, you will want to measure the widht of this from the Dimensions.width
         height: "100%", 
         justifyContent:"center",
     },

@@ -10,7 +10,7 @@ import { ListItem } from "../components"
 export function FamilyScreen(){
 
   const { container } = useTheme()
-  const [sound, setSound] = useState()
+  const [soundPlayer, setSoundPlayer] = useState()
 
   // Create a list of words
   const words = []
@@ -26,24 +26,55 @@ export function FamilyScreen(){
   words.push(new Word("grandfather", "paapa", require("../assets/images/drawable-mdpi/family_grandfather.png"), require("../assets/audio/family_grandfather.mp3")))
 
   useEffect(() => {
-    return sound
+    return soundPlayer
       ? () => {
-          sound.unloadAsync() }
+        soundPlayer.unloadAsync() }
       : undefined
-  }, [sound])
+  }, [soundPlayer])
+
 
   // Set a click listener to play the audio when the list item is clicked on
   const handleOnItemClick = async (position) => {
+
+    // If the media player is not null, then it may be currently playing a sound.
+    if(soundPlayer){
+      // Regardless of the current state of the media player, release its resources
+      // because we no longer need it.
+      await soundPlayer.unloadAsync()
+
+      // Set the media player back to null. For our code, we've decided that
+      // setting the media player to null is an easy way to tell that the media player
+      // is not configured to play an audio file at the moment.
+      setSoundPlayer(null)
+    }
       
     // Get the {@link Word} object at the given position the user clicked on
     const word = words[position]
 
-    // Create and setup the {@link expo-av} for the audio resource associated
-    // with the current word
-    const { sound } = await Audio.Sound.createAsync(word.getAudioResourceId)
+    const sound = new Audio.Sound()
+    try {
+      // Create and setup the {@link expo-av} for the audio resource associated
+      // with the current word
+      await sound.loadAsync(word.getAudioResourceId)
 
-    // Start the audio file
-    await sound.playAsync()
+      setSoundPlayer(sound)
+
+      // Start the audio file
+      await sound.playAsync()
+      
+      // Setup a listener on the media player, so that we can stop and release the
+      // media player once the sound has finished playing.
+      sound.setOnPlaybackStatusUpdate(async (playbackStatus) => {
+        if(playbackStatus.didJustFinish){
+          // Now that the sound file has finished playing, release the sound resources from memory.
+          await sound.unloadAsync()
+          setSoundPlayer(null)
+        }
+      })
+
+    } catch (error) {
+      console.log(error)
+    }
   }
 
   return (

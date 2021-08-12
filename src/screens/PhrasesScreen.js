@@ -82,13 +82,7 @@ export function PhrasesScreen(){
       <View style={styles.content}>
         <FlatList 
           data={words}
-          renderItem={({ item, index }) => {
-            return (
-              <Pressable onPress={() => handleOnItemClick(index)}>
-                <ListItem item={item} style={{ backgroundColor: Colors.category_phrases }} onPress={handleOnItemClick}/>
-              </Pressable>
-            )
-          }}
+          renderItem={({ item, index }) => <ListItem index={index} item={item} style={{ backgroundColor: Colors.category_phrases }} onPress={handleOnItemClick}/>}
           getItemLayout={(_, index) => ({
             length: Dimens.list_item_height + Dimens.word_list_item_separator_height, 
             offset: Dimens.list_item_height + Dimens.word_list_item_separator_height * index,

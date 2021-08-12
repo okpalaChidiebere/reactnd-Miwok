@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react"
-import { View, StyleSheet, FlatList, Pressable }  from "react-native"
+import { View, StyleSheet, FlatList }  from "react-native"
 import { useTheme } from "@react-navigation/native"
 import { Audio } from "expo-av"
 import { SafeAreaView } from "react-native-safe-area-context"
@@ -80,13 +80,7 @@ export function NumbersScreen(){
       <View style={styles.content}>
         <FlatList 
           data={words}
-          renderItem={({ item, index }) => {
-            return (
-              <Pressable onPress={() => handleOnItemClick(index)}>
-                <ListItem item={item} style={{ backgroundColor: Colors.category_numbers }} onPress={handleOnItemClick}/>
-              </Pressable>
-            )
-          }}
+          renderItem={({ item, index }) => <ListItem index={index} item={item} style={{ backgroundColor: Colors.category_numbers }} onPress={handleOnItemClick}/>}
           getItemLayout={(_, index) => ({
             length: Dimens.list_item_height + Dimens.word_list_item_separator_height, 
             offset: Dimens.list_item_height + Dimens.word_list_item_separator_height * index,

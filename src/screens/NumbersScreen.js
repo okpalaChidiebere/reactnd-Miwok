@@ -1,15 +1,12 @@
 import React, { useEffect, useState } from "react"
-import { View, StyleSheet, FlatList }  from "react-native"
-import { useTheme } from "@react-navigation/native"
+import { View, FlatList }  from "react-native"
 import { Audio } from "expo-av"
-import { SafeAreaView } from "react-native-safe-area-context"
-import { Colors, Dimens, Strings } from "../values"
+import { Colors, Dimens } from "../values"
 import Word from "../data/word"
 import { ListItem } from "../components"
 
 export function NumbersScreen(){
 
-  const { container } = useTheme()
   const [soundPlayer, setSoundPlayer] = useState()
 
   const words = []
@@ -76,8 +73,7 @@ export function NumbersScreen(){
     }
   }
   return (
-    <SafeAreaView style={container} edges={["bottom", "left", "right"]}>
-      <View style={styles.content}>
+      <View>
         <FlatList 
           data={words}
           renderItem={({ item, index }) => <ListItem index={index} item={item} style={{ backgroundColor: Colors.category_numbers }} onPress={handleOnItemClick}/>}
@@ -90,25 +86,5 @@ export function NumbersScreen(){
           ItemSeparatorComponent={ () => <View style={{height:Dimens.word_list_item_separator_height, backgroundColor: Colors.colorDivider, marginLeft:8, marginRight:8}}/> }
         />
       </View>
-    </SafeAreaView>
   )
-}
-
-const styles = StyleSheet.create({
-  content: {
-    justifyContent: "flex-start",
-  },
-})
-
-export function NumbersScreenOptions(){
-  return {
-    //learn more about the props you can configure here https://reactnavigation.org/docs/native-stack-navigator/#options
-      title: Strings.category_numbers,
-      headerTintColor: Colors.white,
-      headerBackTitleVisible: false,
-      headerMode: "screen",
-      headerStyle: { 
-        backgroundColor: Colors.primary_color,
-      },
-  }
 }

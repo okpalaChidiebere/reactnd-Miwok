@@ -1,45 +1,48 @@
-import React from "react"
+import React, { createRef } from "react"
 import { Text, View, StyleSheet, Pressable }  from "react-native"
 import { useTheme } from "@react-navigation/native"
 import { SafeAreaView } from "react-native-safe-area-context"
+import ViewPager from "react-native-pager-view"
 import { Colors, Strings } from "../values"
+import { NumbersScreen } from "./NumbersScreen"
+import { FamilyScreen } from "./FamilyScreen"
+import { ColorsScreen } from "./ColorsScreen"
+import { PhrasesScreen } from "./PhrasesScreen"
 
+
+const fragments = { 
+  [Strings.category_numbers]: {
+    getFragment(key){
+      return <NumbersScreen key={key}/>
+    }
+  },
+  [Strings.category_family]: {
+    getFragment(key){
+      return <FamilyScreen key={key}/>
+    }
+  },
+  [Strings.category_colors]: {
+    getFragment(key){
+      return <ColorsScreen key={key}/>
+    }
+  },
+  [Strings.category_phrases]: {
+    getFragment(key){
+      return <PhrasesScreen key={key}/>
+    }
+  },
+}
 export function MainScreen({ navigation, }){
 
   const { categoryStyle, container } = useTheme()
 
   return (
     <SafeAreaView style={[container, { backgroundColor: Colors.tan_background }]} edges={["bottom", "left", "right"]}>
-      <View style={styles.content}>
-        <Pressable onPress={() => navigation.navigate(Strings.category_numbers)}>
-          <Text
-            style={[categoryStyle, { backgroundColor: Colors.category_numbers }]}
-          >
-            {Strings.category_numbers}
-          </Text>
-        </Pressable>
-        <Pressable onPress={() => navigation.navigate(Strings.category_family)}>
-          <Text
-            style={[categoryStyle, { backgroundColor: Colors.category_family }]}
-          >
-            {Strings.category_family}
-          </Text>
-        </Pressable>
-        <Pressable onPress={() => navigation.navigate(Strings.category_colors)}>
-          <Text
-            style={[categoryStyle, { backgroundColor: Colors.category_colors }]}
-          >
-            {Strings.category_colors}
-          </Text>
-        </Pressable>
-        <Pressable onPress={() => navigation.navigate(Strings.category_phrases)}>
-          <Text
-            style={[categoryStyle, { backgroundColor: Colors.category_phrases }]}
-          >
-            {Strings.category_phrases}
-          </Text>
-        </Pressable>
-      </View>
+      <ViewPager style={container} initialPage={0}>
+        {Object.keys(fragments).map(key => {
+          return fragments[key].getFragment(key)
+        })}
+      </ViewPager>
     </SafeAreaView>
   )
 }
@@ -47,6 +50,9 @@ export function MainScreen({ navigation, }){
 const styles = StyleSheet.create({
   content: {
     justifyContent: "flex-start",
+  },
+  viewPager: {
+    flex: 1,
   },
 })
 

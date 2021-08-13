@@ -1,7 +1,10 @@
 import React, { useEffect, useState, forwardRef, useRef } from "react"
-import { View, StyleSheet, Text } from "react-native"
+import { View, StyleSheet, Text, Dimensions } from "react-native"
+import Animated, { useAnimatedStyle, interpolate } from "react-native-reanimated"
 import tabScreens from "../utils/tabUtils"
 import { Colors } from "../values"
+
+const { width } = Dimensions.get("window")
 
 /**
  * FYI with the help of forwardRef we can forwared the reference of a child 
@@ -15,13 +18,49 @@ const CategoryTab = forwardRef(({ tabScreen }, ref ) => {
     )
 })
 
-const TabIndicator = () => {
+const TabIndicator = ({ measures, scrollX }) => {
+    /**
+     * Remember that:
+     * The stable position for tabScreen 1 is 0
+     * The stable position for tabScreen2 is width
+     * The stable position for tabScreen2 is width * 2
+     * and so on...
+     * 
+     * we will end up having inputRange of [0, width, width * 2, ...]
+     */
+    const inputRange = tabScreens.map((_, i) => i * width)
+
+    const animatedTabIndicatorStyle = useAnimatedStyle(() => {
+        const tabIndicatorWidth = interpolate(
+            scrollX.value,
+            inputRange,
+            measures.map(measure => measure.width),
+        )
+        
+        const tabIndicatorPositionLeft = interpolate(
+            scrollX.value,
+            inputRange,
+            measures.map(measure => measure.x), //we get the x value this time
+        )
+
+        return {
+            width: tabIndicatorWidth,
+            left: tabIndicatorPositionLeft,
+            //transform: [{ translateX: tabIndicatorPosition }] //this work will work as well
+        }
+    })
+
     return (
-        <View style={styles.tabIndicator} />
+        <Animated.View 
+            style={[
+                styles.tabIndicator,
+                animatedTabIndicatorStyle,
+            ]}
+        />
     )
 }
 
-export function TabView(){
+export function TabView({ scrollX }){
     /**
      * With measureLyout we need to specify the relative node in order to measure.
      * It could be window, screen or a container. But in our case, its the TabView(that is a container to our CategoryTabs)
@@ -55,7 +94,7 @@ export function TabView(){
     return (
         <View ref={tabViewRef} style={styles.tabView}>
             {tabScreens.map(tabScreen => <CategoryTab key={tabScreen.key} tabScreen={tabScreen} ref={tabScreen.ref} />)}
-            <TabIndicator />
+            {measures && <TabIndicator measures={measures} scrollX={scrollX} />}
         </View>
     )
 }
@@ -71,6 +110,7 @@ const styles = StyleSheet.create({
     tabText: {
         color: Colors.white,
         textTransform: "uppercase",
+        paddingHorizontal: 10,
         fontSize: 18,
         marginVertical: 10,
         fontSize: 64/tabScreens.length, /** we want to grow or shrink the category fontSize based on data length */ 

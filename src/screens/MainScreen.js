@@ -16,7 +16,7 @@ export function MainScreen({ navigation, }){
 
   return (
     <SafeAreaView style={[container, { backgroundColor: Colors.tan_background }]} edges={["bottom", "left", "right"]}>
-      <TabView />
+      <TabView scrollX={scrollX}/>
       <Animated.ScrollView
         style={container} /** we want the scrollView to fill up the outside space*/
         pagingEnabled /** makes pages based upon the width and the height of the scrollView. In our case, its the whole screen*/

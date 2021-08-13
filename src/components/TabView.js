@@ -1,15 +1,19 @@
-import React from "react"
+import React, { useEffect, forwardRef } from "react"
 import { View, StyleSheet, Text } from "react-native"
 import tabScreens from "../utils/tabUtils"
 import { Colors } from "../values"
 
-const CategoryTab = ({ tabScreen }) => {
+/**
+ * FYI with the help of forwardRef we can forwared the reference of a child 
+ * component( eg this component) to its parent cmponent(TabView) 
+ * */
+const CategoryTab = forwardRef(({ tabScreen }, ref ) => {
     return (
-        <View>
+        <View ref={ref}>
           <Text style={styles.tabText}>{tabScreen.key}</Text>
         </View>
     )
-}
+})
 
 const TabIndicator = () => {
     return (
@@ -18,9 +22,18 @@ const TabIndicator = () => {
 }
 
 export function TabView(){
+    useEffect(() => {
+        /**
+         * We want to measure the layout(x, y, height, width) for each CartegoryTab in relation to this component 
+         * (the parent container for CartegoryTab) before this component(TabView) mounts
+         */
+        tabScreens.forEach(tabScreen => {
+            //tabScreen.ref.current.measureLayout()
+        })
+    }, [])
     return (
         <View style={styles.tabView}>
-            {tabScreens.map(tabScreen => <CategoryTab key={tabScreen.key} tabScreen={tabScreen}/>)}
+            {tabScreens.map(tabScreen => <CategoryTab key={tabScreen.key} tabScreen={tabScreen} ref={tabScreen.ref} />)}
             <TabIndicator />
         </View>
     )

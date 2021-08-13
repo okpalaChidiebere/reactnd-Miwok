@@ -5,7 +5,7 @@ import { Colors, Dimens } from "../values"
 import Word from "../data/word"
 import { ListItem } from "../components"
 
-export function PhrasesScreen(){
+export function PhrasesScreen({ containerStyle }){
 
   const [soundPlayer, setSoundPlayer] = useState()
 
@@ -75,7 +75,7 @@ export function PhrasesScreen(){
   }
 
   return (
-      <View>
+      <View style={containerStyle}>
         <FlatList 
           data={words}
           renderItem={({ item, index }) => <ListItem index={index} item={item} style={{ backgroundColor: Colors.category_phrases }} onPress={handleOnItemClick}/>}

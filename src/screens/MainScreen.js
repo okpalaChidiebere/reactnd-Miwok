@@ -1,59 +1,71 @@
 import React, { createRef } from "react"
-import { Text, View, StyleSheet, Pressable }  from "react-native"
+import { Text, View, StyleSheet, Dimensions }  from "react-native"
 import { useTheme } from "@react-navigation/native"
 import { SafeAreaView } from "react-native-safe-area-context"
-import ViewPager from "react-native-pager-view"
+import Animated, { 
+  useAnimatedScrollHandler, 
+  useSharedValue
+} from "react-native-reanimated"
 import { Colors, Strings } from "../values"
 import { NumbersScreen } from "./NumbersScreen"
 import { FamilyScreen } from "./FamilyScreen"
 import { ColorsScreen } from "./ColorsScreen"
 import { PhrasesScreen } from "./PhrasesScreen"
 
-
-const fragments = { 
+const { width, height } = Dimensions.get("window")
+const tabScreens = { 
   [Strings.category_numbers]: {
     getFragment(key){
-      return <NumbersScreen key={key}/>
+      return <NumbersScreen key={key} containerStyle={styles.page}/>
     }
   },
   [Strings.category_family]: {
     getFragment(key){
-      return <FamilyScreen key={key}/>
+      return <FamilyScreen key={key} containerStyle={styles.page}/>
     }
   },
   [Strings.category_colors]: {
     getFragment(key){
-      return <ColorsScreen key={key}/>
+      return <ColorsScreen key={key} containerStyle={styles.page}/>
     }
   },
   [Strings.category_phrases]: {
     getFragment(key){
-      return <PhrasesScreen key={key}/>
+      return <PhrasesScreen key={key} containerStyle={styles.page}/>
     }
   },
 }
+
 export function MainScreen({ navigation, }){
 
-  const { categoryStyle, container } = useTheme()
+  const scrollX = useSharedValue(0)
+  const { container } = useTheme()
 
   return (
     <SafeAreaView style={[container, { backgroundColor: Colors.tan_background }]} edges={["bottom", "left", "right"]}>
-      <ViewPager style={container} initialPage={0}>
-        {Object.keys(fragments).map(key => {
-          return fragments[key].getFragment(key)
+      <Animated.ScrollView
+        style={container} /** we want the scrollView to fill up the outside space*/
+        pagingEnabled /** makes pages based upon the width and the height of the scrollView. In our case, its the whole screen*/
+        horizontal /** enable horizonatal scroll for this */
+        scrollEventThrottle={16}
+        showsHorizontalScrollIndicator={false}
+        bounces={false} /** we want to remove the bounce at the end or begining of the scrollView. This will make this act really like a tab! */
+        onScroll={useAnimatedScrollHandler(e => {
+          //because we are scrolling horizontally we choose the x offset
+          scrollX.value = e.contentOffset.x
         })}
-      </ViewPager>
+      >
+        {Object.keys(tabScreens).map(key => tabScreens[key].getFragment(key))}
+      </Animated.ScrollView>
     </SafeAreaView>
   )
 }
 
 const styles = StyleSheet.create({
-  content: {
-    justifyContent: "flex-start",
-  },
-  viewPager: {
-    flex: 1,
-  },
+  page: {
+    width, 
+    height,
+  }
 })
 
 export function MainScreenOptions(){

@@ -5,7 +5,7 @@ import { Colors, Dimens } from "../values"
 import Word from "../data/word"
 import { ListItem } from "../components"
 
-export function NumbersScreen(){
+export function NumbersScreen({ containerStyle }){
 
   const [soundPlayer, setSoundPlayer] = useState()
 
@@ -73,7 +73,7 @@ export function NumbersScreen(){
     }
   }
   return (
-      <View>
+      <View style={containerStyle}>
         <FlatList 
           data={words}
           renderItem={({ item, index }) => <ListItem index={index} item={item} style={{ backgroundColor: Colors.category_numbers }} onPress={handleOnItemClick}/>}

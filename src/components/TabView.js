@@ -1,5 +1,5 @@
 import React, { useEffect, useState, forwardRef, useRef } from "react"
-import { View, StyleSheet, Text, Dimensions } from "react-native"
+import { View, StyleSheet, Text, Dimensions, TouchableOpacity } from "react-native"
 import Animated, { useAnimatedStyle, interpolate } from "react-native-reanimated"
 import tabScreens from "../utils/tabUtils"
 import { Colors } from "../values"
@@ -10,11 +10,13 @@ const { width } = Dimensions.get("window")
  * FYI with the help of forwardRef we can forwared the reference of a child 
  * component( eg this component) to its parent cmponent(TabView) 
  * */
-const CategoryTab = forwardRef(({ tabScreen }, ref ) => {
+const CategoryTab = forwardRef(({ tabScreen, onTabItemPress }, ref ) => {
     return (
-        <View ref={ref}>
-          <Text style={styles.tabText}>{tabScreen.key}</Text>
-        </View>
+        <TouchableOpacity onPress={onTabItemPress}>
+            <View ref={ref}>
+                <Text style={styles.tabText}>{tabScreen.key}</Text>
+            </View>
+        </TouchableOpacity>
     )
 })
 
@@ -60,7 +62,7 @@ const TabIndicator = ({ measures, scrollX }) => {
     )
 }
 
-export function TabView({ scrollX }){
+export function TabView({ scrollX, onTabItemPress }){
     /**
      * With measureLyout we need to specify the relative node in order to measure.
      * It could be window, screen or a container. But in our case, its the TabView(that is a container to our CategoryTabs)
@@ -68,7 +70,7 @@ export function TabView({ scrollX }){
      * CategoryTab as we want to measure their positions
      */
     const tabViewRef = useRef()
-    const [measures, setMeasures] = useState([]) //stores measurements for out Tab items which we will pass to the TabIndicator
+    const [measures, setMeasures] = useState() //stores measurements for out Tab items which we will pass to the TabIndicator
     useEffect(() => {
         const m = [] //we will populate the temp array in our onSuccess callback
 
@@ -93,7 +95,16 @@ export function TabView({ scrollX }){
     }, [])
     return (
         <View ref={tabViewRef} style={styles.tabView}>
-            {tabScreens.map(tabScreen => <CategoryTab key={tabScreen.key} tabScreen={tabScreen} ref={tabScreen.ref} />)}
+            {tabScreens.map((tabScreen, index) => {
+                return (
+                    <CategoryTab 
+                        key={tabScreen.key} 
+                        tabScreen={tabScreen} 
+                        ref={tabScreen.ref} 
+                        onTabItemPress={() => onTabItemPress(index)/** we want to get the exact categoryTab clicked so that we can scroll the scrollview to desired position */}
+                    />
+                )
+            })}
             {measures && <TabIndicator measures={measures} scrollX={scrollX} />}
         </View>
     )

@@ -1,6 +1,11 @@
 import React, { useEffect, useState, forwardRef, useRef } from "react"
-import { View, StyleSheet, Text, Dimensions, TouchableOpacity } from "react-native"
-import Animated, { useAnimatedStyle, interpolate } from "react-native-reanimated"
+import { View, StyleSheet, Dimensions, TouchableOpacity } from "react-native"
+import Animated, { 
+    useAnimatedStyle, 
+    interpolate, 
+    useAnimatedReaction, 
+    runOnJS
+ } from "react-native-reanimated"
 import tabScreens from "../utils/tabUtils"
 import { Colors } from "../values"
 
@@ -10,11 +15,42 @@ const { width } = Dimensions.get("window")
  * FYI with the help of forwardRef we can forwared the reference of a child 
  * component( eg this component) to its parent cmponent(TabView) 
  * */
-const CategoryTab = forwardRef(({ tabScreen, onTabItemPress }, ref ) => {
+const CategoryTab = forwardRef(({ tabScreen, onTabItemPress, scrollX, tabStablePosition }, ref ) => {
+    const [active, setActive] = useState(false)
+
+    const returningWorklet = (result)  => {
+        if (result === tabStablePosition) {
+            setActive(true)
+        }else{
+            setActive(false)
+        }
+    }
+
+    //learn more about useAnimatedReaction here https://docs.swmansion.com/react-native-reanimated/docs/api/useAnimatedReaction
+    const derived = useAnimatedReaction(() => {
+        return scrollX.value
+      }, (result, previous) => {
+          /**
+           * FYI: if you want to run a function that is from a external package inside reanimated Hooks, you must use runOnJS
+           * An excection like react-native-redash where the methods are marked as worklets themseleves,
+           * you dont need ti
+           * 
+           * if your own defined function that you dont run any eternal package, then you can use worklet directly
+           */
+            runOnJS(returningWorklet)(result)
+      }, [])
+
     return (
         <TouchableOpacity onPress={onTabItemPress}>
             <View ref={ref}>
-                <Text style={styles.tabText}>{tabScreen.key}</Text>
+                <Animated.Text 
+                    style={[
+                        styles.tabText, 
+                        active ? styles.activeTabText : styles.inActiveTabText,
+                    ]}
+                >
+                    {tabScreen.key}
+                </Animated.Text>
             </View>
         </TouchableOpacity>
     )
@@ -101,6 +137,8 @@ export function TabView({ scrollX, onTabItemPress }){
                         key={tabScreen.key} 
                         tabScreen={tabScreen} 
                         ref={tabScreen.ref} 
+                        scrollX={scrollX}
+                        tabStablePosition={index * width}
                         onTabItemPress={() => onTabItemPress(index)/** we want to get the exact categoryTab clicked so that we can scroll the scrollview to desired position */}
                     />
                 )
@@ -119,7 +157,6 @@ const styles = StyleSheet.create({
         backgroundColor: Colors.primary_color,
     },
     tabText: {
-        color: Colors.white,
         textTransform: "uppercase",
         paddingHorizontal: 10,
         fontSize: 18,
@@ -133,6 +170,12 @@ const styles = StyleSheet.create({
         width: 100, //we will change this indicator width later
         backgroundColor: Colors.white,
         bottom: 0,
+    },
+    activeTabText: {
+        color: Colors.white,
+    },
+    inActiveTabText: {
+        color: "#9E9E9E",
     }
 })
 
